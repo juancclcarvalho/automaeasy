@@ -1,0 +1,24 @@
+@charset "UTF-8";
+*{
+    margin: 0;
+}
+.keyboard{
+    text-align: center;
+    white-space: nowrap;
+    
+}
+
+.tecla{
+    padding: 0.625rem;
+    width: 5rem;
+    margin: .125rem 0;
+   
+}
+.controles_cadastrados_painel{
+    position: relative;
+    left: 5vw;
+
+}
+.save_control{
+    margin-top: 13vh!important;
+}

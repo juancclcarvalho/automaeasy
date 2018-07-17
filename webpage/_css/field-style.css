@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+.field-automaeasy{
+    display: block;
+    position: relative;
+    left: 50%;
+    width: 60vw;
+    transform: translate(-50%);
+    border: 1px solid #606060;
+    border-radius: .25rem;
+    margin: 2.5rem 0;
+    color: #606060;
+}
+.field-automaeasy:focus{
+    box-shadow: 0 0 0 0.1rem rgba(253, 126, 20, 0.5);
+}
+.check{
+    color: #606060;
+    transform: translate(10vw);
+    width: 60vw;
+    text-align: left;
+}
+@media screen and (max-width: 700px) {
+    .field-automaeasy{
+        display: block;
+        position: relative;
+        left: 50%;
+        width: 80vw;
+        transform: translate(-50%);
+        border: 1px solid #606060;
+        border-radius: .25rem;
+        margin: 2.5rem 0;
+        color: #606060;
+    }
+}   
+
+

@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.table{
+    margin: 0;
+}
+.table td{
+    padding: 0;
+    vertical-align: middle!important;
+}
+.btn-ambiente{
+    padding:  1rem 15vw 1rem 15vw;
+    text-align: left;
+    color: #606060;
+}
+
+a:hover{
+    text-decoration: none;
+}
+.btn{
+    
+}
+
+
+

@@ -1,0 +1,55 @@
+.window{
+    margin: 5vh 5vw;
+}
+table{
+    width: 100%;
+}
+.accordion-button{
+    border-bottom: 1px solid #909090;
+}
+ul{
+    list-style: none;
+}
+.keyboard{
+    position: relative;
+
+    left: 50%;
+    transform: translate(-50%);
+    width: 16.875rem!important;
+    clear: both;
+}
+.col-amb-equip{
+    float: left;
+    width: 44vw;
+    padding: 5vh 2vw;
+}
+.col-index{
+    float: left;
+    width: 44vw;
+    padding: 5vh 2vw;
+    color: #606060;
+}
+
+.info:hover{
+    cursor: pointer;
+    background-color: #bbb;
+    color: #ff8c00;
+}
+.panel {
+    margin: 1vh 1vw;
+    overflow: hidden;
+    background-color: #ddd
+}
+.hide{
+    display: none;
+}
+.modal{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.active-accordion{
+    cursor: pointer;
+    background-color: #bbb;
+    color: #ff8c00;
+}

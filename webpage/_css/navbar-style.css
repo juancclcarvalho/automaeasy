@@ -1,0 +1,69 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Muli');
+
+*,
+*::after,
+*::before{
+  margin: 0;
+  padding: 0;
+}
+body{
+  font-family: "Muli", sans-serif;
+  color: #606060;
+}
+.navbar{
+  background-image: linear-gradient(to right bottom, rgb(96, 96, 96), rgb(69, 69, 69));
+  padding: 0 1rem;
+}
+.navbar-text, .nav-item{
+  margin: 0 .75rem;
+  
+} 
+
+.nav-link{
+  color: #fff!important;
+  padding: 1.5rem;
+  
+}
+.nav-link:hover{
+  color: #909090!important;
+  text-decoration: underline rgb(255, 140, 0);
+  background-color: rgb(96, 96, 96);
+  transition: .25s ease-out;
+}
+.logo{
+    height: 3rem;
+}
+.active{
+  color: #909090!important;
+  text-decoration: underline rgb(255, 140, 0);
+}
+.interface{
+  position: relative;
+  top: 10vh;
+}
+.field-automaeasy{
+  display: block;
+  position: relative;
+  left: 50%;
+  width: 50vw;
+  transform: translate(-50%);
+  border: 1px solid #606060;
+  border-radius: .25rem;
+  margin: 2rem 0;
+}
+.field-automaeasy:focus{
+  box-shadow: 0 0 0 0.1rem rgba(253, 126, 20, 0.5);
+}
+.footer{
+  position: fixed;
+  bottom: 0;
+  font-size: 2vh;
+  text-align: center;
+  color: rgb(255, 140, 0);
+  white-space: nowrap;
+  background-image: linear-gradient(to right, rgba(96, 96, 96, .9), rgb(69, 69, 69, 1));
+  width: 100vw;
+  padding: 1vh 1vw;
+}
+

@@ -1,0 +1,32 @@
+@charset "UTF-8";
+.btn-automaeasy {
+    background-color: #ff8c00;
+    color: #fff;
+}
+.btn-automaeasy:hover {
+    color: #fff;
+    background-color: #ff8400;
+    border-color: #ff8400;
+}
+
+.btn-automaeasy:focus {
+    background-color: #ff8400;
+    box-shadow: 0 0 0 0.2rem rgba(253, 126, 20, 0.5);
+}
+
+.btn-center {
+    display: block;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    margin: 5vh 0;
+}
+.p{
+    width: 10rem;
+}
+.m{
+    width: 15rem;
+}
+.glyph-icon {
+    width:1rem;
+}

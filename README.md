@@ -1,0 +1,2 @@
+# automaeasy
+Residential Automation Project

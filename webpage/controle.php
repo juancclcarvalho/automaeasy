@@ -4,19 +4,33 @@
 	$controls = find_all('controle');
 
 	$controle = null;
-	$idcontrole = null;
+	$id = null;
 	$tecla = $_POST['tecla'];
 	
-	if (!empty($_GET['idcontrole'])) {
-		$idcontrole = $_GET['idcontrole'];
-		$controle = find('controle', $idcontrole);
-	}
+	if (!empty($_GET['acao'])) {
+
+		if ($_GET['acao'] == 'excluir'){
+
+			$id = $_GET['id'];
 	
+			$ambiente = remove('controle', $id);
+			header('location: controle.php');
+
+		} else {
+			$id = $_GET['id'];
+			$controle = find('controle', $id);
+		}
+		
+	} else {
+	
+		$controle['nome'] = $_POST['controlenome'];
+		$controle['onoff'] = $_POST['controleonoff'];
+		// adicionar aqui todos os botoes e hiddens
+
+	}
 
 	if ($_POST['salvarbtn'] == 'Criar'){
-
-		$controle = $_POST['controle'];
-
+	
 		if ($_POST['id'] == NULL) {
 			save('controle', $controle);
 		} else {
@@ -26,6 +40,8 @@
 		header('location: index.php');
 
         } else if (!empty($_POST['tecla'])) {
+        
+          $controle['id'] = $_POST['id'];
 
 	if ($_POST['tecla'] == 'onoff'){
             $IRCode = serialIR();
@@ -141,9 +157,10 @@
     <link rel="stylesheet" href="_css/navbar-style.css" />
     <link rel="stylesheet" href="_css/field-style.css" />
     <link rel="stylesheet" href="_css/button-style.css" />
+    <link rel="stylesheet" href="_css/table-style.css" />
     
 </head>
-<form action="controle.php" method="post">
+
 
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-light fixed-top">
@@ -170,27 +187,22 @@
         </div>
     </nav>
 
+<form action="controle.php" method="post">
     <div class="interface">
     <table class="controles_cadastrados_painel">   
         <?php if ($controls) : ?>
         <?php foreach ($controls as $control) : ?>
-            <!--<tr class="accordion-button">
+            <tr class="accordion-button">
                 <td>
                 <ul>
-                <a href="controle.php?idcontrole=<?php echo $control['id']; ?>">
+                  <a href="controle.php?id=<?php echo $control['id']; ?>&acao=editar">
                     <li class="col-index info"><?php echo $control['nome']; ?></li></a>
+		  <li class="col-index text-right">
+		    <a href="javascript: confirmaExclusao(<?php echo $control['id']; ?>, '<?php echo $control['nome']; ?>');" class="btn btn-sm btn-automaeasy"><img class="glyph-icon" src="_imagens/si-glyph-trash.svg"/></a>
+		  </li>
                 </ul>
                 </td>
-            </tr>-->
-        
-                <tr>
-                    <td class="controles_cadastrados_lista">
-                        <a href="controle.php?idcontrole=<?php echo $control['id']; ?>">
-                            <?php echo $control['nome']; ?>
-                        </a>
-                    <td>
-                </tr>
-            
+            </tr>
         <?php endforeach; ?>
         <?php else : ?>
             <tr>
@@ -201,13 +213,13 @@
 
 
 	    <input type="hidden" name="id" value="<?php echo $controle['id']; ?>">
-            <input class="field-automaeasy" name="controle['nome']" value="<?php echo $controle['nome']; ?>" placeholder=" Insira aqui o nome do novo controle" maxlength="20"/>
+            <input class="field-automaeasy" name="controlenome" value="<?php echo $controle['nome']; ?>" placeholder=" Insira aqui o nome do novo controle" maxlength="20"/>
             <?php echo $tecla; ?>
             <div class="container-ctrl">
 				<fieldset class="keyboard"> 
 					 <fieldset>
 						 <!-- On/Off -->
-						 <input type="hidden" name="controle['onoff']" value="<?php echo $controle['onoff'] ?>" />
+						 <input type="hidden" name="controleonoff" value="<?php echo $controle['onoff'] ?>" />
 						 <button type="submit" name="tecla" class="tecla" value="onoff">
 						 <img class="glyph-icon" src="_imagens/si-glyph-turn-off.svg"/>
 						 </button>
@@ -331,8 +343,16 @@
     
     </div>
     <input type="submit" class="btn btn-automaeasy btn-center p save_control" id="create" name="salvarbtn" value="Criar" />
-</body>
 </form>
+	<script>
+		function confirmaExclusao(id, nome){
+			if (confirm('Deseja excluir o controle ' + nome + '?')){
+				// Faz o processamento necessário para exclusão
+				location.replace('controle.php?id='+ id +'&acao=excluir');
+			}
+		}
+	</script>
+</body>
 </html>
 
 <?php
@@ -357,7 +377,7 @@
         $serial->confFlowControl("none"); 
         $serial->deviceOpen(); 
 
-            $serial->sendMessage("a"); //envia o caractere 'a' via Serial pro Arduino
+            $serial->sendMessage("3.0"); //envia o caractere 'a' via Serial pro Arduino
             sleep(11); //delay para o Arduino enviar a resposta.
             $read = $serial->readPort(); 
             echo "<div style='clear: both; margin: 3em;'> Serial: " . $read . "</div>"; //echo para mostrar a resposta recebida do Arduino
@@ -365,12 +385,5 @@
 
         $serial->deviceClose();
     }
-    function trataLeitura(){
-        $IRCode = serialIR();
-            if ($IRCode != 0){
-                $controle['onoff'] = $IRCode;
-            } else {
-                echo '<script>alert("Nenhuma tecla pressionada");</script>';
-            }
-    }
+    
 ?>

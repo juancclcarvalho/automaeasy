@@ -4,6 +4,9 @@
 	$equipamento = null;
 	$nome = null;
 	$porta = null;
+	$equip = null;
+	$idEquipamento = null;
+	$controle = null;
 
 	if (!empty($_GET['idambiente'])) {
 		$idambiente = $_GET['idambiente'];
@@ -12,8 +15,9 @@
 	}
 
 
+echo '<br><br><br><br>';
 if(isset($_POST['btn-onoff'])){
-	
+
 	//Envia comando p/ o terminal, Dando permissao a porta ACM0
 	echo shell_exec("chmod a+rw /dev/ttyACM0");
 	
@@ -34,16 +38,15 @@ if(isset($_POST['btn-onoff'])){
 	$msgSerial = $valorBotao[1];
 	$idEquipamento = $valorBotao[0];
 	echo $msgSerial.'<br>';
-	$serial->sendMessage($msgSerial);
-	
-	$equip = find('equipamento', $idequipamento);
+	$serial->sendMessage($msgSerial);	
+	$equip = find('equipamento', $idEquipamento);
 
 	if ($equip['status'] == 1) {
 		$equip['status'] = 0;
 	} else {
 		$equip['status'] = 1;
 	}
-	
+	sleep(2);
 	//$serial->sendMessage(0013a200.414f36f9.13,1);
 
 	$serial->deviceClose(); //encerra a conexao serial
@@ -51,12 +54,8 @@ if(isset($_POST['btn-onoff'])){
 	update('equipamento', $idEquipamento, $equip);
 }
 
-	$equipamentos = findIdFk('equipamento', 'id_ambiente', $idambiente);
-	$ambiente = find('ambiente', $idambiente);
-
-/*************************************************
 if(isset($_POST['tecla'])){
-	if($_POST['tecla'] == 'onoff'){
+
 	//Envia comando p/ o terminal, Dando permissao a porta ACM0
 	echo shell_exec("chmod a+rw /dev/ttyACM0");
 	
@@ -72,17 +71,21 @@ if(isset($_POST['tecla'])){
 	$serial->confFlowControl("none"); //sem controle de fluxo
 	$serial->deviceOpen(); //abre o dispositivo serial para comunicacao
 
+	$valorBotao = explode("/", $_POST['tecla']);
 	
-	$controle = find('controle', $idcontrole);
-	
+	$msgSerial = $valorBotao[1];
+//	$idEquipamento = $valorBotao[0];
+	echo $msgSerial.'<br>';
 	$serial->sendMessage($msgSerial);
 
 	$serial->deviceClose(); //encerra a conexao serial
-
-	}
 }
-**********************************************************/
+
+$equipamentos = findIdFk('equipamento', 'id_ambiente', $idambiente);
+$ambiente = find('ambiente', $idambiente);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -100,7 +103,6 @@ if(isset($_POST['tecla'])){
 	<link rel="stylesheet" href="_css/amb-mod-style.css" />
 </head>
 
-<form action="ambiente_equipamento.php?idambiente=<?php echo $_GET['idambiente']; ?>" method="post">
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-light fixed-top">
         <a class="navbar-brand" href="index.php">
@@ -124,6 +126,8 @@ if(isset($_POST['tecla'])){
             </ul>
         </div>
     </nav>
+
+<form action="ambiente_equipamento.php?idambiente=<?php echo $_GET['idambiente']; ?>" method="post">
 	<hr>
 	<hr>
 	<hr>
@@ -138,6 +142,15 @@ if(isset($_POST['tecla'])){
 				<ul>
 					<li class="col-amb-equip"><?php echo $equipamento['nome']; ?></li>
 					<li class="col-amb-equip actions text-right">
+					
+		<?php 
+			if(!$equipamento['id_controle'] > 0){
+				echo '<button type="submit" name="btn-onoff" class="btn btn-automaeasy btn-center p" 
+						value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$equipamento['status'].','.$equipamento['porta'].'">'.($equipamento['status'] == 1 ? "ligado" : "desligado").'</button>';
+
+			}
+					
+		?>
 						<a href="equipamento.php?id=<?php echo $equipamento['id']; ?>&idambiente=<?php echo $_GET['idambiente']; ?>&acao=editar" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i><img class="glyph-icon" src="_imagens/si-glyph-pencil.svg"/></a>
 						<!--<a href="#" class="btn btn-sm btn-automaeasy" data-toggle="modal" data-target="#confirm"><img class="glyph-icon" src="_imagens/si-glyph-trash.svg"/></a>-->
 						<a href="javascript: confirmaExclusao(<?php echo $equipamento['id']; ?>, '<?php echo $equipamento['nome']; ?>');" class="btn btn-sm btn-automaeasy"><img class="glyph-icon" src="_imagens/si-glyph-trash.svg"/></a>
@@ -148,16 +161,23 @@ if(isset($_POST['tecla'])){
 		
 		<?php 
 			if($equipamento['id_controle'] > 0){
+				
+				$controle = find('controle', $equipamento['id_controle']);
+				
 				echo '<tr class="panel hide"><td> 
 				<div class="container-ctrl">
 				<div class="keyboard"> 
 					<div class="function">
 					 <div>
 						 <!-- On/Off -->
-						 <input type="hidden" name="controle[\'onoff\']" value="<?php echo $controle[\'onoff\'] ?>" />
-						 <button type="submit" name="tecla" class="tecla" value="onoff">
+						 <button type="submit" name="tecla" class="tecla" 
+						 	value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['onoff'].'">
 						 <img class="glyph-icon" src="_imagens/si-glyph-turn-off.svg"/>
 						 </button>
+						<!--<button type="submit" name="tecla" class="tecla" 
+						 	value="'.$equipamento['id'].'/'.$controle['onoff'].'">
+						 <img class="glyph-icon" src="_imagens/si-glyph-turn-off.svg"/>
+						 </button>-->						
 						 <!-- Mudo -->
 						 <input type="hidden" name="controle[\'mute\']" value="<?php echo $controle[\'mute\'] ?>" />
 						 <button type="submit" name="tecla" class="tecla" value="mute">
@@ -277,16 +297,6 @@ if(isset($_POST['tecla'])){
 					 
 				</div>
 			 </div></td></tr>';
-			} else {
-				echo '<tr class="panel hide">
-					<td>
-					
-					<button type="submit" name="btn-onoff" class="btn btn-automaeasy btn-center p" 
-						value="'.$equipamento['id'].'/'.$ambiente['endmacxbee'].'.'.$equipamento['porta'].','.$equipamento['status'].'">'.($equipamento['status'] == 1 ? "ligado" : "desligado").'</button></td></tr>';
-
-					
-					/*<button type="submit" name="btn-onoff" class="btn btn-automaeasy btn-center p" value="0013a200.414f36f9.13,1">ligar</button>
-					<button type="submit" name="btn-onoff" class="btn btn-automaeasy btn-center p" value="0013a200.414f36f9.13,0">desligar</button>*/
 			}
 		?>
 	<?php endforeach; ?>
@@ -344,8 +354,8 @@ if(isset($_POST['tecla'])){
 			}
 		}
 	</script>
-</body>
 </form>
+</body>
 </html>
 
 <?php

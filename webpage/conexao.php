@@ -4,7 +4,7 @@
 define('DB_SERVER', 'localhost');
 define('DB_NAME', 'automaeasy');
 define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'test');
 	
 	function open_database() {
 		try {

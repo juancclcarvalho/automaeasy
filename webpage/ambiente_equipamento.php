@@ -145,7 +145,7 @@ $ambiente = find('ambiente', $idambiente);
 					
 		<?php 
 			if(!$equipamento['id_controle'] > 0){
-				echo '<button type="submit" name="btn-onoff" class="btn btn-automaeasy btn-center p" 
+				echo '<button type="submit" name="btn-onoff" class="btn btn-automaeasy p" 
 						value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$equipamento['status'].','.$equipamento['porta'].'">'.($equipamento['status'] == 1 ? "ligado" : "desligado").'</button>';
 
 			}

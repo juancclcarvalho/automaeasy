@@ -170,6 +170,7 @@ $ambiente = find('ambiente', $idambiente);
 						<div class="keyboard">
 							<div class="function">
 								<div>
+								<input type="hidden" name="botoes_numericos" id="botoes_numericos" value="">
 									<!-- On/Off -->
 									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['onoff'].'">
 										<img class="glyph-icon" src="_imagens/si-glyph-turn-off.svg" />
@@ -302,9 +303,7 @@ $ambiente = find('ambiente', $idambiente);
 									</button>
 			
 									<!-- 0 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['num0'].'">
-										0
-									</button>
+									<a href="javascript: teclasNumericas(1);" class="btn btn-sm btn-automaeasy">0</a>
 									
 									<!-- F6 -->
 									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func6'].'">
@@ -312,11 +311,12 @@ $ambiente = find('ambiente', $idambiente);
 									</button>
 								</div>
 							</div>
-			
+							<button type="submit" name="tecla" class="enviar_numeros" value="'.$_POST['botoes_numericos'].'">Enviar</button>
 						</div>
 					</div>
 				</td>
 			</tr>';
+			echo $_POST['botoes_numericos'];
 			}
 		?>
 	<?php endforeach; ?>
@@ -330,21 +330,7 @@ $ambiente = find('ambiente', $idambiente);
 
 	<a class="btn btn-automaeasy btn-center m" href="equipamento.php?idambiente=<?php echo $_GET['idambiente']; ?>">Adicionar Equipamentos</a>
 	<div>
-	<!--<div class="modal fade" id="confirm" role="dialog">
-		<div class="modal-dialog modal-md">
-
-			<div class="modal-content">
-				<div class="modal-body">
-						<p> Deseja excluir o equipamento?</p>
-				</div>
-				<div class="modal-footer">
-					<a href="equipamento.php?id=<?php echo $equipamento['id']; ?>&idambiente=<?php echo $_GET['idambiente']; ?>&acao=excluir" type="button" class="btn btn-danger" id="delete">Excluir Equipamento</a>
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancelar</button>
-				</div>
-			</div>
-
-		</div>
-	</div>-->
+	
 	<script>
 
 		//Accordion
@@ -374,13 +360,15 @@ $ambiente = find('ambiente', $idambiente);
 			}
 		}
 
-		/*function teclasNumericas(num){
-			
+		function teclasNumericas(num){
+			var botoes_pressionados = document.getElementById('botoes_numericos');
+			botoes_pressionados.value += num;
+			console.log(botoes_pressionados.value);
 		}
 
-		function confirmaEnvio(){
-
-		}*/
+		document.querySelector('enviar_numeros').addEventListener('click', function(){
+			document.getElementById('botoes_numericos').value = "";
+		});
 	</script>
 </form>
 </body>

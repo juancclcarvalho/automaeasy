@@ -23,31 +23,31 @@
 		
 	} else {
 	
-		$controle['nome'] = $_POST['controlenome'];
-        $controle['onoff'] = $_POST['controleonoff'];
-        $controle['mute'] = $_POST['controlemute'];
-        $controle['modo'] = $_POST['controlemodo'];
-        $controle['func1'] = $_POST['controlefunc1'];
-        $controle['voltempup'] = $_POST['controlevoltempup'];
-        $controle['func2'] = $_POST['controlefunc2'];
-        $controle['canalfandw'] = $_POST['controlecanalfandw'];
-        $controle['enter'] = $_POST['controleenter'];
-        $controle['canalfanup'] = $_POST['controlecanalfanup'];
-        $controle['func3'] = $_POST['controlefunc3'];
-        $controle['voltempdw'] = $_POST['controlevoltempdw'];
-        $controle['func4'] = $_POST['controlefunc4'];
-        $controle['num1'] = $_POST['controlenum1'];
-        $controle['num2'] = $_POST['controlenum2'];
-        $controle['num3'] = $_POST['controlenum3'];
-        $controle['num4'] = $_POST['controlenum4'];
-        $controle['num5'] = $_POST['controlenum5'];
-        $controle['num6'] = $_POST['controlenum6'];
-        $controle['num7'] = $_POST['controlenum7'];
-        $controle['num8'] = $_POST['controlenum8'];
-        $controle['num9'] = $_POST['controlenum9'];
-        $controle['func5'] = $_POST['controlefunc5'];
-        $controle['num0'] = $_POST['controlenum0'];
-        $controle['func6'] = $_POST['controlefunc6'];
+	$controle['nome'] = $_POST['controlenome'];
+        $controle['onoff'] = "2.".$_POST['controleonoff'];
+        $controle['mute'] = "2.".$_POST['controlemute'];
+        $controle['modo'] = "2.".$_POST['controlemodo'];
+        $controle['func1'] = "2.".$_POST['controlefunc1'];
+        $controle['voltempup'] = "2.".$_POST['controlevoltempup'];
+        $controle['func2'] = "2.".$_POST['controlefunc2'];
+        $controle['canalfandw'] = "2.".$_POST['controlecanalfandw'];
+        $controle['enter'] = "2.".$_POST['controleenter'];
+        $controle['canalfanup'] = "2.".$_POST['controlecanalfanup'];
+        $controle['func3'] = "2.".$_POST['controlefunc3'];
+        $controle['voltempdw'] = "2.".$_POST['controlevoltempdw'];
+        $controle['func4'] = "2.".$_POST['controlefunc4'];
+        $controle['num1'] = "2.".$_POST['controlenum1'];
+        $controle['num2'] = "2.".$_POST['controlenum2'];
+        $controle['num3'] = "2.".$_POST['controlenum3'];
+        $controle['num4'] = "2.".$_POST['controlenum4'];
+        $controle['num5'] = "2.".$_POST['controlenum5'];
+        $controle['num6'] = "2.".$_POST['controlenum6'];
+        $controle['num7'] = "2.".$_POST['controlenum7'];
+        $controle['num8'] = "2.".$_POST['controlenum8'];
+        $controle['num9'] = "2.".$_POST['controlenum9'];
+        $controle['func5'] = "2.".$_POST['controlefunc5'];
+        $controle['num0'] = "2.".$_POST['controlenum0'];
+        $controle['func6'] = "2.".$_POST['controlefunc6'];
 
 		// adicionar aqui todos os botoes e hiddens
 

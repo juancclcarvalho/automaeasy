@@ -135,6 +135,7 @@ $ambiente = find('ambiente', $idambiente);
 	<table>
 	<tbody>
 	<input type="hidden" name="idambiente" value="<?php echo $idambiente; ?>">
+	<input type="hidden" name="botoes_numericos" id="botoes_numericos" value="">
 	<?php if ($equipamentos) : ?>
 	<?php foreach ($equipamentos as $equipamento) : ?>
 		<tr class="info accordion accordion-button">
@@ -170,7 +171,6 @@ $ambiente = find('ambiente', $idambiente);
 						<div class="keyboard">
 							<div class="function">
 								<div>
-								<input type="hidden" name="botoes_numericos" id="botoes_numericos" value="">
 									<!-- On/Off -->
 									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['onoff'].'">
 										<img class="glyph-icon" src="_imagens/si-glyph-turn-off.svg" />
@@ -250,49 +250,49 @@ $ambiente = find('ambiente', $idambiente);
 							<div class="num">
 								<div>
 									<!-- 1 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['num1'].'">
+									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num1'].');">
 										1
 									</button>
 			
 									<!-- 2 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['num2'].'">
+									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num2'].');">
 										2
 									</button>
 			
 									<!-- 3 -->                       
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['num3'].'">
+									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num3'].');">
 										3
 									</button>
 								</div>
 								<div>
 									<!-- 4 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['num4'].'">
+									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num4'].');">
 										4
 									</button>
 			
 									<!-- 5 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['num5'].'">
+									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num5'].');">
 										5
 									</button>
 			
 									<!-- 6 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['num6'].'">
+									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num6'].');">
 										6
 									</button>
 								</div>
 								<div>
 									<!-- 7 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['num7'].'">
+									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num7'].');">
 										7
 									</button>
 			
 									<!-- 8 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['num8'].'">
+									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num8'].');">
 										8
 									</button>
 			
 									<!-- 9 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['num9'].'">
+									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num9'].');">
 										9
 									</button>
 								</div>
@@ -303,15 +303,19 @@ $ambiente = find('ambiente', $idambiente);
 									</button>
 			
 									<!-- 0 -->
-									<a href="javascript: teclasNumericas(1);" class="btn btn-sm btn-automaeasy">0</a>
-									
+									<!-- <a href="javascript: teclasNumericas('.$controle['num0'].');" class="btn btn-sm btn-automaeasy">0</a>-->
+
+									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['onoff'].');">
+										0
+									</button>
+
 									<!-- F6 -->
 									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func6'].'">
 										F6
 									</button>
 								</div>
 							</div>
-							<button type="submit" name="tecla" class="enviar_numeros" value="'.$_POST['botoes_numericos'].'">Enviar</button>
+							<button type="submit" name="tecla" class="tecla enviar" onclick="alteraValor(\'enviar'.$equipamento['id'].'\')" id="enviar'.$equipamento['id'].'" class="enviar_numeros" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.">Enviar</button>
 						</div>
 					</div>
 				</td>
@@ -362,11 +366,15 @@ $ambiente = find('ambiente', $idambiente);
 
 		function teclasNumericas(num){
 			var botoes_pressionados = document.getElementById('botoes_numericos');
-			botoes_pressionados.value += num;
-			console.log(botoes_pressionados.value);
+			botoes_pressionados.value += num + "-";
 		}
 
-		document.querySelector('enviar_numeros').addEventListener('click', function(){
+		function alteraValor(id){
+			var botaoEnviar = document.getElementById(id);
+			botaoEnviar.value += document.getElementById('botoes_numericos').value;
+		}
+
+		document.querySelector('.enviar_numeros').addEventListener('click', function(){
 			document.getElementById('botoes_numericos').value = "";
 		});
 	</script>

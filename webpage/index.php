@@ -44,9 +44,7 @@
             </ul>
         </div>
     </nav>
-	<hr>
-	<hr>
-	<hr>
+	<br/><br/>
 	<?php if (!empty($_SESSION['message'])) : ?>
 		<div class="alert alert-<?php echo $_SESSION['type']; ?> alert-dismissible" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -55,46 +53,30 @@
 		<?php clear_messages(); ?>
 	<?php endif; ?>
 	<div class="window">
-	<table>
-	<tbody>
-	<?php if ($ambientes) : ?>
-	<?php foreach ($ambientes as $ambiente) : ?>
-		<tr class="accordion-button">
-			<td>
-			<ul>
-			<a href="ambiente_equipamento.php?idambiente=<?php echo $ambiente['id']; ?>"><li class="col-index info"><?php echo $ambiente['nome']; ?></li></a>
-				<li class="col-index text-right">
-				<a href="ambiente.php?id=<?php echo $ambiente['id']; ?>&acao=editar" class="btn btn-sm btn-primary"><img class="glyph-icon" src="_imagens/si-glyph-pencil.svg"/></a>
-				<!--<a href="#" class="btn btn-sm btn-automaeasy" data-toggle="modal" data-target="#confirm"><img class="glyph-icon" src="_imagens/si-glyph-trash.svg"/></a>-->
-				<a href="javascript: confirmaExclusao(<?php echo $ambiente['id']; ?>, '<?php echo $ambiente['nome']; ?>');" class="btn btn-sm btn-automaeasy"><img class="glyph-icon" src="_imagens/si-glyph-trash.svg"/></a>
-				</li>
-</ul>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	<?php else : ?>
-		<tr>
-			<td colspan="6">Nenhum registro encontrado.</td>
-		</tr>
-	<?php endif; ?>
-	</tbody>
-	</table>
+		<table>
+			<tbody>
+				<?php if ($ambientes) : ?>
+				<?php foreach ($ambientes as $ambiente) : ?>
+					<tr class="el">
+						<td>
+							<ul>
+								<a href="ambiente_equipamento.php?idambiente=<?php echo $ambiente['id']; ?>"><li class="_col amb-equip"><?php echo $ambiente['nome']; ?></li></a>
+								<li class="_col text-right">
+									<a href="ambiente.php?id=<?php echo $ambiente['id']; ?>&acao=editar" class="btn btn-sm btn-primary"><img class="glyph-icon" src="_imagens/si-glyph-pencil.svg"/></a>
+									<a href="javascript: confirmaExclusao(<?php echo $ambiente['id']; ?>, '<?php echo $ambiente['nome']; ?>');" class="btn btn-sm btn-automaeasy"><img class="glyph-icon" src="_imagens/si-glyph-trash.svg"/></a>
+								</li>
+							</ul>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+				<?php else : ?>
+					<tr>
+						<td colspan="6">Nenhum registro encontrado.</td>
+					</tr>
+				<?php endif; ?>
+			</tbody>
+		</table>
 	</div>
-		<!--<div class="modal fade" id="confirm" role="dialog">
-		<div class="modal-dialog modal-md">
-
-			<div class="modal-content">
-			<div class="modal-body">
-					<p> Deseja excluir o ambiente?</p>
-			</div>
-			<div class="modal-footer">
-				<a href="ambiente.php?id=<?php echo $ambiente['id']; ?>&acao=excluir" type="button" class="btn btn-danger" id="delete">Excluir Ambiente</a>
-					<button type="button" data-dismiss="modal" class="btn btn-default">Cancelar</button>
-			</div>
-			</div>
-
-		</div>
-	</div>-->
 	<script>
 		function confirmaExclusao(id, nome){
 			if (confirm('Deseja excluir o ambiente ' + nome + '?')){

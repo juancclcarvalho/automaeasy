@@ -128,208 +128,204 @@ $ambiente = find('ambiente', $idambiente);
     </nav>
 
 <form action="ambiente_equipamento.php?idambiente=<?php echo $_GET['idambiente']; ?>" method="post">
-	<hr>
-	<hr>
-	<hr>
    	<div class="window">
 	<table>
-	<tbody>
-	<input type="hidden" name="idambiente" value="<?php echo $idambiente; ?>">
-	<input type="hidden" name="botoes_numericos" id="botoes_numericos" value="">
-	<?php if ($equipamentos) : ?>
-	<?php foreach ($equipamentos as $equipamento) : ?>
-		<tr class="info accordion accordion-button">
-			<td>
-				<ul>
-					<li class="col-amb-equip"><?php echo $equipamento['nome']; ?></li>
-					<li class="col-amb-equip actions text-right">
-					
-		<?php 
-			if(!$equipamento['id_controle'] > 0){
-				echo '<button type="submit" name="btn-onoff" class="btn btn-automaeasy p" 
-						value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$equipamento['status'].','.$equipamento['porta'].'">'.($equipamento['status'] == 1 ? "ligado" : "desligado").'</button>';
+		<tbody>
+			<input type="hidden" name="idambiente" value="<?php echo $idambiente; ?>">
+			<input type="hidden" name="botoes_numericos" id="botoes_numericos" value="">
+			<?php if ($equipamentos) : ?>
+			<?php foreach ($equipamentos as $equipamento) : ?>
+				<tr class="accordion el">
+					<td>
+						<ul class="table-amb-equip">
+							<li class="_col"><?php echo $equipamento['nome']; ?></li>
+							<li class="_col actions text-right">
+							
+								<?php 
+									if(!$equipamento['id_controle'] > 0){
+										echo '<button type="submit" name="btn-onoff" class="btn btn-sm '.($equipamento['status'] == 1 ? "btn-warning" : "btn-gray").'" 
+												value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$equipamento['status'].','.$equipamento['porta'].'"><img class="glyph-icon" src="_imagens/si-glyph-lamp-desk.svg"/></button>';
 
-			}
+									}
+											
+								?>
+												<a href="equipamento.php?id=<?php echo $equipamento['id']; ?>&idambiente=<?php echo $_GET['idambiente']; ?>&acao=editar" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i><img class="glyph-icon" src="_imagens/si-glyph-pencil.svg"/></a>
+												<a href="javascript: confirmaExclusao(<?php echo $equipamento['id']; ?>, '<?php echo $equipamento['nome']; ?>');" class="btn btn-sm btn-automaeasy"><img class="glyph-icon" src="_imagens/si-glyph-trash.svg"/></a>
+							</li>
+						</ul>
+					</td>
+				</tr>
+				
+				<?php 
+					if($equipamento['id_controle'] > 0){
+						
+						$controle = find('controle', $equipamento['id_controle']);
+						
+						echo '<tr class="panel hide">
+						<td>
+							<div class="container-ctrl">
+								<div class="keyboard">
+									<div class="function">
+										<div>
+											<!-- On/Off -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['onoff'].'">
+												<img class="glyph-icon" src="_imagens/si-glyph-turn-off.svg" />
+											</button>
+											<!--<button type="submit" name="tecla" class="tecla" 
+									value="'.$equipamento['id'].'/'.$controle['onoff'].'">
+								<img class="glyph-icon" src="_imagens/si-glyph-turn-off.svg"/>
+								</button>-->
 					
-		?>
-						<a href="equipamento.php?id=<?php echo $equipamento['id']; ?>&idambiente=<?php echo $_GET['idambiente']; ?>&acao=editar" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i><img class="glyph-icon" src="_imagens/si-glyph-pencil.svg"/></a>
-						<!--<a href="#" class="btn btn-sm btn-automaeasy" data-toggle="modal" data-target="#confirm"><img class="glyph-icon" src="_imagens/si-glyph-trash.svg"/></a>-->
-						<a href="javascript: confirmaExclusao(<?php echo $equipamento['id']; ?>, '<?php echo $equipamento['nome']; ?>');" class="btn btn-sm btn-automaeasy"><img class="glyph-icon" src="_imagens/si-glyph-trash.svg"/></a>
-					</li>
-				</ul>
-			</td>
-		</tr>
-		
-		<?php 
-			if($equipamento['id_controle'] > 0){
-				
-				$controle = find('controle', $equipamento['id_controle']);
-				
-				echo '<tr class="panel hide">
-				<td>
-					<div class="container-ctrl">
-						<div class="keyboard">
-							<div class="function">
-								<div>
-									<!-- On/Off -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['onoff'].'">
-										<img class="glyph-icon" src="_imagens/si-glyph-turn-off.svg" />
-									</button>
-									<!--<button type="submit" name="tecla" class="tecla" 
-							 value="'.$equipamento['id'].'/'.$controle['onoff'].'">
-						 <img class="glyph-icon" src="_imagens/si-glyph-turn-off.svg"/>
-						 </button>-->
-			
-									<!-- Mudo -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['mute'].'">
-										<img class="glyph-icon" src="_imagens/si-glyph-sound-mute.svg" />
-									</button>
-			
-									<!-- Modo -->
-									<!--<input type="hidden" name="controle[\'modo\']" value="<?php echo $controle[\'modo\'] ?>" />
-						 <button type="submit" name="tecla" class="tecla" value="modo">
-							 Mode
-						 </button>-->
-			
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['modo'].'">
-										Mode
-									</button>
-								</div>
-			
-			
-								<div>
-									<!-- F1 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func1'].'">
-										F1
-									</button>
-			
-									<!-- Volume + -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['voltempup'].'">
-										Vol +
-									</button>
-			
-									<!-- F2 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func2'].'">
-										F2
-									</button>
-			
-								</div>
-								<div>
-									<!-- Canal - -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['canalfandw'].'">
-										<img class="glyph-icon" src="_imagens/si-glyph-remove.svg" />
-									</button>
-			
-									<!-- Enter -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['enter'].'">
-										<img class="glyph-icon" src="_imagens/si-glyph-triangle-right.svg" />
-									</button>
-			
-									<!-- Canal + -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['canalfanup'].'">
-										<img class="glyph-icon" src="_imagens/si-glyph-plus.svg" />
-									</button>
-								</div>
-								<div>
-									<!-- F3 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func3'].'">
-										F3
-									</button>
-			
-									<!-- Volume - -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['voltempdw'].'">
-										Vol -
-									</button>
-			
-									<!-- F4 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func4'].'">
-										F4
-									</button>
+											<!-- Mudo -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['mute'].'">
+												<img class="glyph-icon" src="_imagens/si-glyph-sound-mute.svg" />
+											</button>
+					
+											<!-- Modo -->
+											<!--<input type="hidden" name="controle[\'modo\']" value="<?php echo $controle[\'modo\'] ?>" />
+								<button type="submit" name="tecla" class="tecla" value="modo">
+									Mode
+								</button>-->
+					
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['modo'].'">
+											<img class="glyph-icon" src="_imagens/si-glyph-wrench-screwdriver.svg" />
+											</button>
+										</div>
+					
+					
+										<div>
+											<!-- F1 -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func1'].'">
+												F1
+											</button>
+					
+											<!-- Volume + -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['voltempup'].'">
+												Vol +
+											</button>
+					
+											<!-- F2 -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func2'].'">
+												F2
+											</button>
+					
+										</div>
+										<div>
+											<!-- Canal - -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['canalfandw'].'">
+												<img class="glyph-icon" src="_imagens/si-glyph-remove.svg" />
+											</button>
+					
+											<!-- Enter -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['enter'].'">
+												<img class="glyph-icon" src="_imagens/si-glyph-triangle-right.svg" />
+											</button>
+					
+											<!-- Canal + -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['canalfanup'].'">
+												<img class="glyph-icon" src="_imagens/si-glyph-plus.svg" />
+											</button>
+										</div>
+										<div>
+											<!-- F3 -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func3'].'">
+												F3
+											</button>
+					
+											<!-- Volume - -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['voltempdw'].'">
+												Vol -
+											</button>
+					
+											<!-- F4 -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func4'].'">
+												F4
+											</button>
+										</div>
+									</div>
+									<div class="num">
+										<div>
+											<!-- 1 -->
+											<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num1'].');">
+												1
+											</button>
+					
+											<!-- 2 -->
+											<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num2'].');">
+												2
+											</button>
+					
+											<!-- 3 -->                       
+											<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num3'].');">
+												3
+											</button>
+										</div>
+										<div>
+											<!-- 4 -->
+											<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num4'].');">
+												4
+											</button>
+					
+											<!-- 5 -->
+											<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num5'].');">
+												5
+											</button>
+					
+											<!-- 6 -->
+											<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num6'].');">
+												6
+											</button>
+										</div>
+										<div>
+											<!-- 7 -->
+											<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num7'].');">
+												7
+											</button>
+					
+											<!-- 8 -->
+											<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num8'].');">
+												8
+											</button>
+					
+											<!-- 9 -->
+											<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num9'].');">
+												9
+											</button>
+										</div>
+										<div>
+											<!-- F5 -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func5'].'">
+												F5
+											</button>
+					
+											<!-- 0 -->
+											<!-- <a href="javascript: teclasNumericas('.$controle['num0'].');" class="btn btn-sm btn-automaeasy">0</a>-->
+
+											<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['onoff'].');">
+												0
+											</button>
+
+											<!-- F6 -->
+											<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func6'].'">
+												F6
+											</button>
+										</div>
+									</div>
+									<button type="submit" name="tecla" class="tecla enviar" onclick="alteraValor(\'enviar'.$equipamento['id'].'\')" id="enviar'.$equipamento['id'].'" class="enviar_numeros" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.">Enviar</button>
 								</div>
 							</div>
-							<div class="num">
-								<div>
-									<!-- 1 -->
-									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num1'].');">
-										1
-									</button>
-			
-									<!-- 2 -->
-									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num2'].');">
-										2
-									</button>
-			
-									<!-- 3 -->                       
-									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num3'].');">
-										3
-									</button>
-								</div>
-								<div>
-									<!-- 4 -->
-									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num4'].');">
-										4
-									</button>
-			
-									<!-- 5 -->
-									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num5'].');">
-										5
-									</button>
-			
-									<!-- 6 -->
-									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num6'].');">
-										6
-									</button>
-								</div>
-								<div>
-									<!-- 7 -->
-									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num7'].');">
-										7
-									</button>
-			
-									<!-- 8 -->
-									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num8'].');">
-										8
-									</button>
-			
-									<!-- 9 -->
-									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['num9'].');">
-										9
-									</button>
-								</div>
-								<div>
-									<!-- F5 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func5'].'">
-										F5
-									</button>
-			
-									<!-- 0 -->
-									<!-- <a href="javascript: teclasNumericas('.$controle['num0'].');" class="btn btn-sm btn-automaeasy">0</a>-->
-
-									<button type="button" name="tecla" class="tecla" onclick="javascript: teclasNumericas('.$controle['onoff'].');">
-										0
-									</button>
-
-									<!-- F6 -->
-									<button type="submit" name="tecla" class="tecla" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.'.$controle['func6'].'">
-										F6
-									</button>
-								</div>
-							</div>
-							<button type="submit" name="tecla" class="tecla enviar" onclick="alteraValor(\'enviar'.$equipamento['id'].'\')" id="enviar'.$equipamento['id'].'" class="enviar_numeros" value="'.$equipamento['id'].'/1.'.$ambiente['endmacxbee'].'.">Enviar</button>
-						</div>
-					</div>
-				</td>
-			</tr>';
-			echo $_POST['botoes_numericos'];
-			}
-		?>
-	<?php endforeach; ?>
-	<?php else : ?>
-		<tr>
-			<td colspan="6">Nenhum registro encontrado.</td>
-		</tr>
-	<?php endif; ?>
-	</tbody>
+						</td>
+					</tr>';
+					
+					}
+				?>
+			<?php endforeach; ?>
+			<?php else : ?>
+				<tr>
+					<td colspan="6">Nenhum registro encontrado.</td>
+				</tr>
+			<?php endif; ?>
+		</tbody>
 	</table>
 
 	<a class="btn btn-automaeasy btn-center m" href="equipamento.php?idambiente=<?php echo $_GET['idambiente']; ?>">Adicionar Equipamentos</a>

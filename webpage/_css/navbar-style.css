@@ -1,15 +1,19 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css?family=Muli');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|PT+Sans');
 
 *,
 *::after,
 *::before{
   margin: 0;
   padding: 0;
+  
 }
 body{
-  font-family: "Muli", sans-serif;
+  font-family: 'PT Sans', sans-serif;
   color: #606060;
+  font-size: .85rem!important;
+  overflow: hidden!important;
 }
 .navbar{
   background-image: linear-gradient(to right bottom, rgb(96, 96, 96), rgb(69, 69, 69));

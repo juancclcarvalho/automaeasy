@@ -403,7 +403,7 @@
         $serial->confFlowControl("none"); 
         $serial->deviceOpen(); 
 
-            $serial->sendMessage("3.0"); //envia o caractere 'a' via Serial pro Arduino
+            $serial->sendMessage("2.0"); //envia o caractere 'a' via Serial pro Arduino
             sleep(11); //delay para o Arduino enviar a resposta.
             $read = $serial->readPort(); 
             echo "<div style='clear: both; margin: 3em;'> Serial: " . $read . "</div>"; //echo para mostrar a resposta recebida do Arduino

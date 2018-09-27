@@ -126,7 +126,6 @@ $ambiente = find('ambiente', $idambiente);
             </ul>
         </div>
     </nav>
-
 <form action="ambiente_equipamento.php?idambiente=<?php echo $_GET['idambiente']; ?>" method="post">
    	<div class="window">
 	<table>
@@ -135,9 +134,12 @@ $ambiente = find('ambiente', $idambiente);
 			<input type="hidden" name="botoes_numericos" id="botoes_numericos" value="">
 			<?php if ($equipamentos) : ?>
 			<?php foreach ($equipamentos as $equipamento) : ?>
-				<tr class="accordion el">
+			
+			<tr class="accordion el">
+				
 					<td>
 						<ul class="table-amb-equip">
+						<a href="#active-acc">
 							<li class="_col"><?php echo $equipamento['nome']; ?></li>
 							<li class="_col actions text-right">
 							
@@ -152,10 +154,12 @@ $ambiente = find('ambiente', $idambiente);
 												<a href="equipamento.php?id=<?php echo $equipamento['id']; ?>&idambiente=<?php echo $_GET['idambiente']; ?>&acao=editar" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i><img class="glyph-icon" src="_imagens/si-glyph-pencil.svg"/></a>
 												<a href="javascript: confirmaExclusao(<?php echo $equipamento['id']; ?>, '<?php echo $equipamento['nome']; ?>');" class="btn btn-sm btn-automaeasy"><img class="glyph-icon" src="_imagens/si-glyph-trash.svg"/></a>
 							</li>
+							</a>
 						</ul>
 					</td>
-				</tr>
 				
+			</tr>
+			
 				<?php 
 					if($equipamento['id_controle'] > 0){
 						
@@ -345,14 +349,21 @@ $ambiente = find('ambiente', $idambiente);
 					$('.panel').addClass("hide");
 					$('.accordion').removeClass('active-accordion');
 					$(this).addClass('active-accordion');
+					$(this).attr('id', 'active-acc');
 					panel.classList.remove("hide");
+					targetOffset = $('#active-acc').offset().top;
+					$('html, body').animate({ 
+						scrollTop: targetOffset - 100
+					}, 500);
 				}else{
 					$('.panel').addClass('hide');
 					$('.accordion').removeClass('active-accordion');
+					$('.accordion').attr('id', '');
 				}
 
 			});
 		}
+	
 		function confirmaExclusao(id, nome){
 			if (confirm('Deseja excluir o equipamento ' + nome + '?')){
 				// Faz o processamento necessário para exclusão

@@ -37,7 +37,7 @@ if(isset($_POST['btn-onoff'])){
 	
 	$msgSerial = $valorBotao[1];
 	$idEquipamento = $valorBotao[0];
-	echo $msgSerial.'<br>';
+	//echo $msgSerial.'<br>';
 	$serial->sendMessage($msgSerial);	
 	$equip = find('equipamento', $idEquipamento);
 

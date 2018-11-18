@@ -107,18 +107,15 @@ void loop() {
           if (txStatus.getDeliveryStatus() == SUCCESS) {
             // Transmissão bem sucedida
             Serial.println("Transmissão bem sucedida!");
-            digitalWrite(success, 1);
           } else {
             // Transmissão sem resposta! Verificar alimentação do dispositivo remoto
             Serial.println("Transmissão sem resposta! Verificar alimentação do dispositivo remoto");
-            digitalWrite(warning, 1);
           }
         }
       } else if (xbee.getResponse().isError()) {
       } else {
         // Transmissão não realizada! Falha no dispositivo local
         Serial.println("Transmissão não realizada! Falha no dispositivo local");
-        digitalWrite(error, 1);
       }
 
     } else if (firstDigit == "2") {// Controle remoto

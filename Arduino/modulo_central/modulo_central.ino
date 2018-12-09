@@ -4,8 +4,8 @@
 #include<SoftwareSerial.h>
 
 
-const byte rxPin = 7;// Pino Rx do Explorer
-const byte txPin = 8;// Pino Tx do Explorer
+const byte rxPin = 6;// Pino Rx do Explorer
+const byte txPin = 7;// Pino Tx do Explorer
 SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);// Instancia nova porta serial
 
 
@@ -34,6 +34,8 @@ void setup() {
   //Atribui porta serial 3 ao objeto xbee
   xbee.setSerial(mySerial);
 
+  pinMode(13, OUTPUT);
+  digitalWrite(13, 1);
   irrecv.enableIRIn();
 
 }

@@ -8,7 +8,7 @@
 #define SHCP 8
 #define STCP 9
 // Array 74HC595
-boolean registers[8];
+boolean registers[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 //Cria um objeto Xbee
 XBee xbee = XBee();
@@ -40,6 +40,7 @@ void setup() {
   for (int i = 2; i < 14; i++) {
     pinMode(i, OUTPUT);
   }
+  setup74HC595();
 }
 // Lê continuamente pacotes, buscando por ZB Receive ou Modem Status
 void loop() {
